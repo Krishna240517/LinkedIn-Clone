@@ -14,6 +14,7 @@ export const getFeedPosts = async (req, res) => {
 
         res.status(200).json({ post });
     } catch (error) {
+        console.log("error in getFeedPosts", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 }
@@ -45,6 +46,7 @@ export const createPost = async (req, res) => {
         await newPost.save();
         res.status(201).json(newPost);
     } catch (error) {
+        console.log("Error in creating post", error);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 }

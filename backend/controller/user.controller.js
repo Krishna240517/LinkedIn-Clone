@@ -12,6 +12,7 @@ export const getSuggestedConnections = async(req , res)=>{
         }).select("name username profilePicture headline").limit(3);
         res.json(suggestedUser);
     } catch(error){
+        console.log("Error in getting suggested connections",error);
         return res.status(500).json({message : "Server Error"});
     }
 };
@@ -26,6 +27,7 @@ export const getPublicProfile = async(req,res)=>{
         }
         res.json(requesteduser);
     } catch(error){
+        console.log("Error in getting public profile",error);
         return res.status(500).json({message : "Server Error"});
     }
 
@@ -51,6 +53,8 @@ export const updateProfile = async(req,res)=>{
                 updatedData[field] = req.body[field];
             }
         }
+        //todo: check for the profile image and banner image => uploaded to cloudinary
+
         if(req.body.profilePicture){
             const result = await cloudinary.uploader.upload(req.body.profilePicture);
             //this will return a object containing secure_url of the image; 
@@ -60,12 +64,12 @@ export const updateProfile = async(req,res)=>{
             const res = await cloudinary.uploader.upload(req.body.bannerImg);
             updatedData.bannerImg = res.secure_url;
         }
-        //todo: check for the profile image and banner image => uploaded to cloudinary
-
+        
         const user = await User.findOneAndUpdate(req.user._id,{$set: updatedData},{new : true}).select("-password");
         
         res.json(user);
     } catch(error){
+        console.log("Error in updating profile",error);
         return res.status(500).json({message: "Internal Server Error"});
     }
 };

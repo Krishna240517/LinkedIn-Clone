@@ -27,6 +27,7 @@ export const authenticate = async (req, res, next) => {
         req.user = user;
         next();
     } catch(error){
+        console.log("Error in auth middleware", error);
         return res.status(501).json({
             success : false,
             message : "Internal Server Error"
