@@ -13,6 +13,6 @@ export const sendWelcomeEmail = async(email, name, profileUrl)=>{
         }); 
         console.log("Welcome Email sent successfully",response);
     } catch(error){
-        console.log("Error in sending email welcome email");
+        console.log("Error in sending email welcome email",error);
     }
 }
